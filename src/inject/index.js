@@ -132,7 +132,8 @@ const providerOptions = {
     options: {
       infuraId: INFURA_ID,
       rpc: {
-        80001: "https://matic-mumbai.chainstacklabs.com"
+        80001: "https://matic-mumbai.chainstacklabs.com",
+        137: "https://polygon-rpc.com"
       }
     }
   }
