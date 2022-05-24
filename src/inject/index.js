@@ -192,9 +192,12 @@ const ensureButtons = () => {
 };
 
 window.addEventListener("DOMNodeInserted", () => {
-  inputElem = document.querySelector('[data-text="true"]');
+  inputElem = document.querySelectorAll('span[data-text="true"]');
   if (inputElem) {
-    inputText = inputElem.innerHTML;
+    inputText = Array.from(inputElem).reduce(
+      (prev, curr) => `${prev} ${curr.innerHTML}`,
+      ""
+    );
   }
   reroot.disabled = !inputText;
   ensureButtons();
