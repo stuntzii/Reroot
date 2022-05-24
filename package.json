@@ -1,0 +1,33 @@
+{
+  "name": "reroot",
+  "version": "1.0.0",
+  "description": "Extension for twitter that gives you the option to also post to lens protocol",
+  "main": "index.js",
+  "author": "Stuntzii",
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/client": "^3.6.4",
+    "@walletconnect/web3-provider": "^1.7.1",
+    "axios": "^0.27.2",
+    "dotenv-cli": "^5.1.0",
+    "ethers": "^5.6.7",
+    "extension-cli": "^1.2.4",
+    "graphql": "^16.5.0",
+    "uuid": "^8.3.2",
+    "web3modal": "^1.9.7",
+    "webpack": "4.44.2"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "scripts": {
+    "start": "xt-build -e dev -w",
+    "build": "xt-build -e prod",
+    "clean": "xt-clean",
+    "docs": "xt-docs",
+    "test": "xt-test",
+    "coverage": "nyc --reporter=lcov npm run test"
+  }
+}
