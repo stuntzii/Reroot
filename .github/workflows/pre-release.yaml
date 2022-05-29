@@ -18,7 +18,7 @@ jobs:
 
       - name: "Setup env"
         run: |
-          echo """export const INFURA_ID = "${{ secrets.INFURA_API_KEY }}"; export const PINATA_API_KEY = "${{ secrets.PINATA_API_KEY }}"; export const PINATA_API_SECRET = "${{ secrets.PINATA_API_SECRET }}";""" > src/env.js
+          echo """export const INFURA_ID = "${{ secrets.INFURA_ID }}"; export const PINATA_API_KEY = "${{ secrets.PINATA_API_KEY }}"; export const PINATA_API_SECRET = "${{ secrets.PINATA_API_SECRET }}";""" > src/env.js
 
       - name: "Build & test"
         run: |
@@ -33,4 +33,4 @@ jobs:
           title: "Development Build"
           files: |
             LICENSE.txt
-            dist/*
+            dist/
