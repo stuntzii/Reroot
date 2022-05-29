@@ -24,10 +24,11 @@ jobs:
         run: |
           yarn
           yarn build
+          mv build reroot
 
       - name: "Compress build"
         run: |
-          zip -r build.zip dist
+          zip -r reroot.zip reroot
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
