@@ -37,4 +37,4 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            build.zip
+            reroot.zip
