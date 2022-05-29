@@ -2,7 +2,7 @@ import axios from "axios";
 import { gql } from "@apollo/client";
 import { v4 as uuidv4 } from "uuid";
 
-import { apolloClient } from "./apollo-client";
+import { getApolloClient } from "./apollo-client";
 import { PINATA_API_KEY, PINATA_API_SECRET } from "../env";
 
 const DEFAULT_PROFILE_QUERY = `
@@ -44,14 +44,14 @@ query DefaultProfile($request: DefaultProfileRequest!) {
   }
 }`;
 
-export const getUserProfile = async ethereumAddress => {
-  const response = await apolloClient.query({
+export const getUserProfile = async (ethereumAddress, lensApi) => {
+  const response = await getApolloClient(lensApi).query({
     query: gql(DEFAULT_PROFILE_QUERY),
     variables: {
       request: {
-        ethereumAddress
-      }
-    }
+        ethereumAddress,
+      },
+    },
   });
   return response.data.defaultProfile;
 };
@@ -67,21 +67,21 @@ export const formatPost = ({ text, handle }) => ({
   name: `Post by @${handle}`,
   attributes: [{ traitType: "string", key: "type", value: "post" }],
   media: [],
-  appId: "Reroot"
+  appId: "Reroot",
 });
 
-export const pinJSONToIpfs = json => {
+export const pinJSONToIpfs = (json) => {
   const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
   return axios.post(
     url,
     {
-      pinataContent: json
+      pinataContent: json,
     },
     {
       headers: {
         pinata_api_key: PINATA_API_KEY,
-        pinata_secret_api_key: PINATA_API_SECRET
-      }
+        pinata_secret_api_key: PINATA_API_SECRET,
+      },
     }
   );
 };

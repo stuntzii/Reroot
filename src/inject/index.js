@@ -16,7 +16,7 @@ modal.id = "reroot-modal";
 const font = document.createElement("style");
 font.innerHTML = `@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap");@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');`;
 
-const setConnectModal = action => {
+const setConnectModal = (action) => {
   modal.className = "active";
   modal.innerHTML = `
     <div class="content-container">
@@ -36,38 +36,42 @@ const postToLens = async ({
   profileId,
   signer,
   provider,
-  contracts
+  networkInfo,
 }) => {
   const metadata = formatPost({
     text,
-    handle
+    handle,
   });
   const {
-    data: { IpfsHash }
+    data: { IpfsHash },
   } = await pinJSONToIpfs(metadata);
   const postData = {
     profileId,
     contentURI: `https://ipfs.io/ipfs/${IpfsHash}`,
-    collectModule: contracts.freeCollectModule,
+    collectModule: networkInfo.freeCollectModule,
     collectModuleInitData: ethers.utils.defaultAbiCoder.encode(
       ["bool"],
       [true]
     ),
     referenceModule: "0x0000000000000000000000000000000000000000",
-    referenceModuleInitData: []
+    referenceModuleInitData: [],
   };
   console.log({
-    postData
+    postData,
   });
-  const lensHub = new ethers.Contract(contracts.lensHubProxy, LensHub, signer);
+  const lensHub = new ethers.Contract(
+    networkInfo.lensHubProxy,
+    LensHub,
+    signer
+  );
 
   console.log({
-    lensHub
+    lensHub,
   });
-  lensHub.post(postData).then(tx => {
+  lensHub.post(postData).then((tx) => {
     waitForTx(provider, tx).then(() => {
       closeModal();
-      tweetButtons.forEach(button => {
+      tweetButtons.forEach((button) => {
         if (button) {
           button.click();
         }
@@ -84,7 +88,7 @@ const setPostModal = ({
   text,
   signer,
   provider,
-  contracts
+  contracts,
 }) => {
   modal.className = "active";
   modal.innerHTML = `
@@ -133,31 +137,32 @@ const providerOptions = {
       infuraId: INFURA_ID,
       rpc: {
         80001: "https://matic-mumbai.chainstacklabs.com",
-        137: "https://polygon-rpc.com"
-      }
-    }
-  }
+        137: "https://polygon-rpc.com",
+      },
+    },
+  },
 };
 
 const web3Modal = new Web3Modal({
   network: "mainnet",
   cacheProvider: false,
-  providerOptions
+  providerOptions,
 });
 
 const reroot = document.createElement("button");
 reroot.id = "reroot";
 reroot.innerHTML = lensLogo;
-reroot.addEventListener("click", function() {
-  setConnectModal(async button => {
+reroot.addEventListener("click", function () {
+  setConnectModal(async (button) => {
     button.innerHTML = '<span class="loader"></span>';
     try {
       const instance = await web3Modal.connectTo("walletconnect");
       const provider = new ethers.providers.Web3Provider(instance);
       const signer = provider.getSigner();
       const address = await signer.getAddress();
-      console.log({ provider, address });
-      const user = await getUserProfile(address);
+      const network = await provider.getNetwork();
+      const networkInfo = chainData[provider._network.chainId];
+      const user = await getUserProfile(address, networkInfo.lensApi);
       setPostModal({
         profileId: user.id,
         userImg: user.picture.original.url,
@@ -166,7 +171,7 @@ reroot.addEventListener("click", function() {
         text: inputText,
         signer,
         provider,
-        contracts: chainData[provider._network.chainId]
+        networkInfo,
       });
     } catch (err) {
       console.error(err);
@@ -178,10 +183,10 @@ reroot.addEventListener("click", function() {
 const ensureButtons = () => {
   tweetButtons = [
     document.querySelector('[data-testid="tweetButtonInline"]'),
-    document.querySelector('[data-testid="tweetButton"]')
+    document.querySelector('[data-testid="tweetButton"]'),
   ];
 
-  tweetButtons.forEach(button => {
+  tweetButtons.forEach((button) => {
     if (
       button &&
       button.parentNode &&
