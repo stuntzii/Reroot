@@ -1,0 +1,36 @@
+name: "pre-release"
+
+on:
+  push:
+    branches:
+      - "dev"
+
+jobs:
+  pre-release:
+    name: "Pre Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      - name: "Setup env"
+        run: |
+          echo """export const INFURA_ID = "${{ secrets.INFURA_API_KEY }}"; export const PINATA_API_KEY = "${{ secrets.PINATA_API_KEY }}"; export const PINATA_API_SECRET = "${{ secrets.PINATA_API_SECRET }}";""" > src/env.js
+
+      - name: "Build & test"
+        run: |
+          yarn
+          yarn build
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            LICENSE.txt
+            dist/*
