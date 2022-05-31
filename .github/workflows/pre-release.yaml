@@ -5,6 +5,11 @@ on:
     branches:
       - "main"
 
+env:
+  INFURA_ID: ${{ secrets.INFURA_ID }}
+  PINATA_API_KEY: ${{ PINATA_API_KEY }}
+  PINATA_API_SECRET: ${{ PINATA_API_SECRET }}
+
 jobs:
   pre-release:
     name: "Pre Release"
@@ -15,10 +20,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 14
-
-      - name: "Setup env"
-        run: |
-          echo "export const INFURA_ID = \"${{ secrets.INFURA_ID }}\"; export const PINATA_API_KEY = \"${{ secrets.PINATA_API_KEY }}\"; export const PINATA_API_SECRET = \"${{ secrets.PINATA_API_SECRET }}\";" > src/env.js
 
       - name: "Build & test"
         run: |
