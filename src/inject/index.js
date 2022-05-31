@@ -1,4 +1,6 @@
-import { ethers } from "ethers";
+import { Contract } from "@ethersproject/contracts";
+import { defaultAbiEncoder } from "@ethersproject/abi";
+import { Web3Provider } from "@ethersproject/providers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 

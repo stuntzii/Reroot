@@ -2,6 +2,8 @@ const webpack = require("webpack");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   mode: "production",
@@ -71,5 +73,7 @@ module.exports = {
     new Dotenv({
       path: "./.env",
     }),
+    // Uncomment to see package sizes
+    // new BundleAnalyzerPlugin(),
   ],
 };
