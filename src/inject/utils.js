@@ -3,7 +3,6 @@ import { gql } from "@apollo/client";
 import { v4 as uuidv4 } from "uuid";
 
 import { getApolloClient } from "./apollo-client";
-import { PINATA_API_KEY, PINATA_API_SECRET } from "../env";
 
 const DEFAULT_PROFILE_QUERY = `
 query DefaultProfile($request: DefaultProfileRequest!) {
@@ -79,8 +78,8 @@ export const pinJSONToIpfs = (json) => {
     },
     {
       headers: {
-        pinata_api_key: PINATA_API_KEY,
-        pinata_secret_api_key: PINATA_API_SECRET,
+        pinata_api_key: process.env.PINATA_API_KEY,
+        pinata_secret_api_key: process.env.PINATA_API_SECRET,
       },
     }
   );

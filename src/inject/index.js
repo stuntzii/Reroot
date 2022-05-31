@@ -2,7 +2,6 @@ import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
-import { INFURA_ID } from "../env.js";
 import { formatPost, getUserProfile, pinJSONToIpfs } from "./utils";
 import LensHub from "./abis/LensHub.json";
 import { chainData } from "./chain";
@@ -136,7 +135,7 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
     options: {
-      infuraId: INFURA_ID,
+      infuraId: process.env.INFURA_ID,
       rpc: {
         80001: "https://matic-mumbai.chainstacklabs.com",
         137: "https://polygon-rpc.com",

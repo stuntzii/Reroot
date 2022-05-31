@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   mode: "production",
@@ -13,7 +14,7 @@ module.exports = {
   },
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, "build/"),
+    path: path.resolve(__dirname, "dist/"),
   },
   resolve: {
     fallback: {
@@ -61,6 +62,9 @@ module.exports = {
     new webpack.ProvidePlugin({
       process: "process/browser.js",
       Buffer: ["buffer", "Buffer"],
+    }),
+    new Dotenv({
+      path: "./.env",
     }),
   ],
 };
