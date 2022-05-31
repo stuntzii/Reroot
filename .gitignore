@@ -16,3 +16,4 @@ dist/
 release.zip
 
 src/env.js
+build/
