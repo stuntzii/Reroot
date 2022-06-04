@@ -7,8 +7,8 @@ on:
 
 env:
   INFURA_ID: ${{ secrets.INFURA_ID }}
-  PINATA_API_KEY: ${{ PINATA_API_KEY }}
-  PINATA_API_SECRET: ${{ PINATA_API_SECRET }}
+  PINATA_API_KEY: ${{ secrets.PINATA_API_KEY }}
+  PINATA_API_SECRET: ${{ secrets.PINATA_API_SECRET }}
 
 jobs:
   pre-release:
