@@ -12,7 +12,9 @@ yarn-error.log*
 .npm
 .eslintcache
 
+.env
+
 dist/
 release.zip
 
-src/env.js
+src/typechain

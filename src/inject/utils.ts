@@ -3,7 +3,25 @@ import { gql } from "@apollo/client";
 import { v4 as uuidv4 } from "uuid";
 
 import { getApolloClient } from "./apollo-client";
-import { PINATA_API_KEY, PINATA_API_SECRET } from "../env";
+
+interface FormatPostParams {
+  text: string;
+  handle: string;
+}
+
+interface PostMetadata {
+  version: string;
+  metadata_id: string;
+  description: string;
+  content: string;
+  external_url: string | null;
+  image: string | null;
+  imageMimeType: string | null;
+  name: string;
+  attributes: any;
+  media: any;
+  appId: string;
+}
 
 const DEFAULT_PROFILE_QUERY = `
 query DefaultProfile($request: DefaultProfileRequest!) {
@@ -44,7 +62,10 @@ query DefaultProfile($request: DefaultProfileRequest!) {
   }
 }`;
 
-export const getUserProfile = async (ethereumAddress, lensApi) => {
+export const getUserProfile = async (
+  ethereumAddress: string,
+  lensApi: string
+) => {
   const response = await getApolloClient(lensApi).query({
     query: gql(DEFAULT_PROFILE_QUERY),
     variables: {
@@ -56,7 +77,10 @@ export const getUserProfile = async (ethereumAddress, lensApi) => {
   return response.data.defaultProfile;
 };
 
-export const formatPost = ({ text, handle }) => ({
+export const formatPost = ({
+  text,
+  handle,
+}: FormatPostParams): PostMetadata => ({
   version: "1.0.0",
   metadata_id: uuidv4(),
   description: text,
@@ -70,7 +94,7 @@ export const formatPost = ({ text, handle }) => ({
   appId: "Reroot",
 });
 
-export const pinJSONToIpfs = (json) => {
+export const pinJSONToIpfs = (json: any) => {
   const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
   return axios.post(
     url,
@@ -79,22 +103,9 @@ export const pinJSONToIpfs = (json) => {
     },
     {
       headers: {
-        pinata_api_key: PINATA_API_KEY,
-        pinata_secret_api_key: PINATA_API_SECRET,
+        pinata_api_key: process.env.PINATA_API_KEY,
+        pinata_secret_api_key: process.env.PINATA_API_SECRET,
       },
     }
   );
 };
-
-export const waitForTx = async (provider, tx) =>
-  new Promise(async (resolve, reject) => {
-    const result = await provider.getTransactionReceipt(tx.hash);
-    console.log({ provider, tx, result });
-    if (result != null) {
-      resolve(result);
-    } else {
-      setTimeout(() => {
-        waitForTx(provider, tx).then(resolve);
-      }, 500);
-    }
-  });
