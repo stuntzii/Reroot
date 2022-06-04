@@ -12,7 +12,7 @@ module.exports = {
     __dirname: false,
   },
   entry: {
-    inject: "./src/inject/index.ts",
+    inject: "./src/inject/index.tsx",
   },
   output: {
     filename: "[name].js",
@@ -41,6 +41,15 @@ module.exports = {
         test: /\.tsx?$/,
         loader: "babel-loader",
         exclude: "/node_modules/",
+      },
+      {
+        test: /\.js$/,
+        loader: "source-map-loader",
+        enforce: "pre",
+      },
+      {
+        test: /\.svg$/,
+        use: ["@svgr/webpack", "url-loader"],
       },
     ],
   },
