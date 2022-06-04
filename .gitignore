@@ -16,3 +16,5 @@ yarn-error.log*
 
 dist/
 release.zip
+
+src/typechain

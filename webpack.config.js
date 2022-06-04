@@ -12,13 +12,14 @@ module.exports = {
     __dirname: false,
   },
   entry: {
-    inject: "./src/inject/index.js",
+    inject: "./src/inject/index.ts",
   },
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist/"),
   },
   resolve: {
+    extensions: [".ts", ".tsx", ".js"],
     fallback: {
       util: require.resolve(`util/`),
       url: require.resolve(`url/`),
