@@ -1,8 +1,8 @@
-import { Signer, ethers } from "ethers";
+import { Signer, ethers } from 'ethers';
 
-import { Network } from "./chain";
-import { formatPost, pinJSONToIpfs } from "./utils";
-import { LensHub__factory } from "../typechain";
+import { Network } from './chain';
+import { formatPost, pinJSONToIpfs } from './utils';
+import { LensHub__factory } from '../typechain';
 
 interface PostToLensParams {
   text: string;
@@ -40,10 +40,10 @@ export const postToLens = async ({
     contentURI: `https://ipfs.io/ipfs/${IpfsHash}`,
     collectModule: networkInfo.freeCollectModule,
     collectModuleInitData: ethers.utils.defaultAbiCoder.encode(
-      ["bool"],
-      [true]
+      ['bool'],
+      [true],
     ),
-    referenceModule: "0x0000000000000000000000000000000000000000",
+    referenceModule: '0x0000000000000000000000000000000000000000',
     referenceModuleInitData: [],
   };
 

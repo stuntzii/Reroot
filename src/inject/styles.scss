@@ -12,55 +12,40 @@
 }
 
 #reroot-modal {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
+  /* position: fixed; */
+  /* top: 0; */
+  /* right: 0; */
+  /* left: 0; */
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* background: rgba(0, 0, 0, 0.5); */
 
-  &.active {
-    bottom: 0;
-  }
+  /* &.active { */
+  /*   bottom: 0; */
+  /* } */
 
-  .content-container {
-    max-width: 360px;
-    background: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    border-radius: 20px;
+  /* .content-container { */
+  /*   max-width: 360px; */
+  /*   background: white; */
+  /*   padding: 20px; */
+  /*   display: flex; */
+  /*   flex-direction: column; */
+  /*   gap: 20px; */
+  /*   border-radius: 20px; */
 
-    .lens-logo {
-      background: var(--light-green);
-      width: 150px;
-      height: 150px;
-      padding: 25px;
-      box-sizing: border-box;
-      border-radius: 20px;
-    }
-  }
+  /*   .lens-logo { */
+  /*     background: var(--light-green); */
+  /*     width: 150px; */
+  /*     height: 150px; */
+  /*     padding: 25px; */
+  /*     box-sizing: border-box; */
+  /*     border-radius: 20px; */
+  /*   } */
+  /* } */
 
-  button {
-    background: var(--dark-green);
-    color: white;
-    width: 150px;
-    height: 40px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-
-    &:hover {
-      background: var(--dark-green-dark);
-    }
-
-    &:active {
-      background: var(--dark-green-darker);
-    }
-  }
+  /* button { */
+  /* } */
 
   .post-text {
     font-family: "Space Grotesk", sans-serif;

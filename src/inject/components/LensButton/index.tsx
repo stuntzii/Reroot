@@ -46,12 +46,13 @@ const Button = styled.button`
 
 interface Props {
   el: HTMLElement;
+  onClick: () => void;
 }
 
-export default function Modal({ el }: Props) {
+export default function Modal({ el, onClick }: Props) {
   return el
     ? ReactDOM.createPortal(
-        <Button>
+        <Button onClick={onClick}>
           <img src={lensLogo} alt="logo" />
         </Button>,
         el
