@@ -1,15 +1,15 @@
 import { Signer, ethers } from "ethers";
 
-import { Network } from "./chain";
-import { formatPost, pinJSONToIpfs } from "./utils";
-import { LensHub__factory } from "../typechain";
+import { Network } from "../chain";
+import { formatPost, pinJSONToIpfs } from "./general";
+import { LensHub__factory } from "../../typechain";
 
 interface PostToLensParams {
   text: string;
   handle: string;
   profileId: string;
   signer: Signer;
-  networkInfo: Network;
+  networkConfig: Network;
 }
 
 interface PostData {
@@ -26,7 +26,7 @@ export const postToLens = async ({
   handle,
   profileId,
   signer,
-  networkInfo,
+  networkConfig,
 }: PostToLensParams): Promise<void> => {
   const metadata = formatPost({
     text,
@@ -38,7 +38,7 @@ export const postToLens = async ({
   const postData: PostData = {
     profileId,
     contentURI: `https://ipfs.io/ipfs/${IpfsHash}`,
-    collectModule: networkInfo.freeCollectModule,
+    collectModule: networkConfig.freeCollectModule,
     collectModuleInitData: ethers.utils.defaultAbiCoder.encode(
       ["bool"],
       [true]
@@ -47,7 +47,7 @@ export const postToLens = async ({
     referenceModuleInitData: [],
   };
 
-  const lensHub = LensHub__factory.connect(networkInfo.lensHubProxy, signer);
+  const lensHub = LensHub__factory.connect(networkConfig.lensHubProxy, signer);
   const tx = await lensHub.post(postData);
   await tx.wait(1);
 };
