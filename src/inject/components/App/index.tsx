@@ -13,15 +13,15 @@ export default function App() {
   }, [setModal]);
 
   useEffect(() => {
-    const checkForTweetButtons = () => {
+    const onUpdate = () => {
       setTweetButtons([
         document.querySelector('[data-testid="tweetButtonInline"]'),
         document.querySelector('[data-testid="tweetButton"]'),
       ]);
     };
-    window.addEventListener("DOMNodeInserted", checkForTweetButtons);
+    window.addEventListener("DOMNodeInserted", onUpdate);
     return () => {
-      window.removeEventListener("DOMNodeInserted", checkForTweetButtons);
+      window.removeEventListener("DOMNodeInserted", onUpdate);
     };
   }, []);
 

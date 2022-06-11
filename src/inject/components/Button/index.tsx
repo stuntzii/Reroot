@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default styled.button`
   background: var(--dark-green);
   color: white;
-  width: 150px;
+  width: 100%;
   height: 40px;
   border: none;
   border-radius: 20px;

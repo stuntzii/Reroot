@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 
+import usePostContent from "../../contexts/PostContentContext";
 import lensLogo from "../../../assets/lens.svg";
 
 const Button = styled.button`
@@ -50,9 +51,11 @@ interface Props {
 }
 
 export default function Modal({ el, onClick }: Props) {
+  const { inputText } = usePostContent();
+
   return el
     ? ReactDOM.createPortal(
-        <Button onClick={onClick}>
+        <Button onClick={onClick} disabled={!inputText}>
           <img src={lensLogo} alt="logo" />
         </Button>,
         el

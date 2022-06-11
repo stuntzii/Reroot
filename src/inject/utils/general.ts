@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { gql } from '@apollo/client';
-import { v4 as uuidv4 } from 'uuid';
+import axios from "axios";
+import { gql } from "@apollo/client";
+import { v4 as uuidv4 } from "uuid";
 
-import { getApolloClient } from './apollo-client';
+import { getApolloClient } from "../apollo-client";
 
 interface FormatPostParams {
   text: string;
@@ -64,7 +64,7 @@ query DefaultProfile($request: DefaultProfileRequest!) {
 
 export const getUserProfile = async (
   ethereumAddress: string,
-  lensApi: string,
+  lensApi: string
 ) => {
   const response = await getApolloClient(lensApi).query({
     query: gql(DEFAULT_PROFILE_QUERY),
@@ -81,7 +81,7 @@ export const formatPost = ({
   text,
   handle,
 }: FormatPostParams): PostMetadata => ({
-  version: '1.0.0',
+  version: "1.0.0",
   metadata_id: uuidv4(),
   description: text,
   content: text,
@@ -89,13 +89,13 @@ export const formatPost = ({
   image: null,
   imageMimeType: null,
   name: `Post by @${handle}`,
-  attributes: [{ traitType: 'string', key: 'type', value: 'post' }],
+  attributes: [{ traitType: "string", key: "type", value: "post" }],
   media: [],
-  appId: 'Reroot',
+  appId: "Reroot",
 });
 
 export const pinJSONToIpfs = (json: any) => {
-  const url = 'https://api.pinata.cloud/pinning/pinJSONToIPFS';
+  const url = "https://api.pinata.cloud/pinning/pinJSONToIPFS";
   return axios.post(
     url,
     {
@@ -106,6 +106,16 @@ export const pinJSONToIpfs = (json: any) => {
         pinata_api_key: process.env.PINATA_API_KEY,
         pinata_secret_api_key: process.env.PINATA_API_SECRET,
       },
-    },
+    }
   );
+};
+
+export const postToTwitter = () => {
+  const buttons: HTMLButtonElement[] = [
+    document.querySelector('[data-testid="tweetButtonInline"]'),
+    document.querySelector('[data-testid="tweetButton"]'),
+  ];
+  buttons.forEach((button) => {
+    button?.click();
+  });
 };

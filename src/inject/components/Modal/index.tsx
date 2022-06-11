@@ -22,6 +22,7 @@ const ContentContainer = styled.div<{ active: boolean }>`
   flex-direction: column;
   gap: 20px;
   border-radius: 20px;
+  align-items: center;
 `;
 
 interface ModalProps {
