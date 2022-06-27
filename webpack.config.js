@@ -1,9 +1,9 @@
 const webpack = require("webpack");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const FilterWarningsPlugin = require("webpack-filter-warnings-plugin");
 const Dotenv = require("dotenv-webpack");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
   mode: "production",
@@ -12,7 +12,7 @@ module.exports = {
     __dirname: false,
   },
   entry: {
-    inject: "./src/inject/index.ts",
+    inject: "./src/inject/index.tsx",
   },
   output: {
     filename: "[name].js",
@@ -21,14 +21,14 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     fallback: {
-      util: require.resolve(`util/`),
-      url: require.resolve(`url/`),
-      assert: require.resolve(`assert/`),
-      crypto: require.resolve(`crypto-browserify`),
-      os: require.resolve(`os-browserify/browser`),
-      https: require.resolve(`https-browserify`),
-      http: require.resolve(`stream-http`),
-      stream: require.resolve(`stream-browserify`),
+      util: require.resolve("util/"),
+      url: require.resolve("url/"),
+      assert: require.resolve("assert/"),
+      crypto: require.resolve("crypto-browserify"),
+      os: require.resolve("os-browserify/browser"),
+      https: require.resolve("https-browserify"),
+      http: require.resolve("stream-http"),
+      stream: require.resolve("stream-browserify"),
     },
   },
   module: {
@@ -42,6 +42,15 @@ module.exports = {
         loader: "babel-loader",
         exclude: "/node_modules/",
       },
+      {
+        test: /\.js$/,
+        loader: "source-map-loader",
+        enforce: "pre",
+      },
+      {
+        test: /\.svg$/,
+        use: ["@svgr/webpack", "url-loader"],
+      },
     ],
   },
   plugins: [
@@ -49,7 +58,7 @@ module.exports = {
       patterns: [
         {
           from: "common/manifest.json",
-          transform: function (content, path) {
+          transform(content, path) {
             // generates the manifest file using the package.json informations
             return Buffer.from(
               JSON.stringify({
@@ -73,6 +82,9 @@ module.exports = {
     }),
     new Dotenv({
       path: "./.env",
+    }),
+    new FilterWarningsPlugin({
+      exclude: /Failed\sto\sparse\ssource\smap/,
     }),
     // Uncomment to see package sizes
     // new BundleAnalyzerPlugin(),

@@ -2,7 +2,7 @@ import axios from "axios";
 import { gql } from "@apollo/client";
 import { v4 as uuidv4 } from "uuid";
 
-import { getApolloClient } from "./apollo-client";
+import { getApolloClient } from "../apollo-client";
 
 interface FormatPostParams {
   text: string;
@@ -95,7 +95,7 @@ export const formatPost = ({
 });
 
 export const pinJSONToIpfs = (json: any) => {
-  const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
+  const url = "https://api.pinata.cloud/pinning/pinJSONToIPFS";
   return axios.post(
     url,
     {
@@ -108,4 +108,14 @@ export const pinJSONToIpfs = (json: any) => {
       },
     }
   );
+};
+
+export const postToTwitter = () => {
+  const buttons: HTMLButtonElement[] = [
+    document.querySelector('[data-testid="tweetButtonInline"]'),
+    document.querySelector('[data-testid="tweetButton"]'),
+  ];
+  buttons.forEach((button) => {
+    button?.click();
+  });
 };

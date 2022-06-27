@@ -24,7 +24,7 @@ export const chainData: { [key: number]: Network } = {
     lensApi: "https://api-mumbai.lens.dev",
     networkDetails: {
       chainId: "0x13881",
-      rpcUrls: ["https://matic-mumbai.chainstacklabs.com	"],
+      rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
       chainName: "Matic Mainnet",
       nativeCurrency: {
         name: "MATIC",
