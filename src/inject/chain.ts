@@ -40,7 +40,7 @@ export const chainData: { [key: number]: Network } = {
     lensApi: "https://api.lens.dev/",
     networkDetails: {
       chainId: "0x89",
-      rpcUrls: ["https://rpc-mainnet.matic.network/"],
+      rpcUrls: ["https://polygon-rpc.com"],
       chainName: "Matic Mainnet",
       nativeCurrency: {
         name: "MATIC",
